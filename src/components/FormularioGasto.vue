@@ -1,15 +1,38 @@
 <script setup>
 // 🔨 [A · Req 1] Reciban 'categorias' por prop (para el <select>).
-// 🔨 [A · Req 2] Declaren el evento 'agregar' (defineEmits).
-// 🔨 [A · Req 1] Estado del formulario con v-model (Lección 3): descripción, monto, categoría.
-// 🔨 [A · Req 2] Al enviar: validen, emitan 'agregar' con { descripcion, monto, categoria }
-//               y limpien. El hijo NO agrega a ninguna lista: solo avisa al padre.
+import {ref} from 'vue'
+
+const emit = defineEmits(['agregar']);
+
+const descripcion = ref('');
+const monto = ref(0);
+const categoria = ref('');  
+
+
+
+//Enviar formulario 
+const enviarFormulario = () => {
+if(!descripcion.value || monto.value <=0 || !categoria.value) return;
+
+  emit('agregar', {descripcion: descripcion.value, monto: monto.value, categoria: categoria.value});
+  descripcion.value = '';
+  monto.value = 0;
+  categoria.value = '';  
+}
 </script>
 
 <template>
-  <!-- 🔨 [A] Un <form @submit.prevent> (Día 1) con: input de descripción,
-       input numérico de monto, un <select> de categoría (v-for sobre categorias)
-       y el botón Agregar. Clases disponibles: .fin-form, .btn -->
+  <form @submit.prevent="enviarFormulario">
+    <input v-model="descripcion" placeholder="Descripción" type="text">
+    <input v-model="monto" placeholder="Monto" type="number">
+    <select v-model="categoria">
+      <option v-for="categoria in categorias" :key="categoria" :value="categoria">
+        {{ categoria }}
+      </option>
+    </select>
+    <button type='submit'>Agregar</button>    
+  </form>
+
 </template>
 
 <style scoped>
