@@ -1,7 +1,6 @@
 <script setup>
-// 🔨 [A · Req 1] Reciban 'categorias' por prop (para el <select>).
 import {ref} from 'vue'
-
+const props = defineProps(['categorias']);
 const emit = defineEmits(['agregar']);
 
 const descripcion = ref('');
@@ -26,8 +25,8 @@ if(!descripcion.value || monto.value <=0 || !categoria.value) return;
     <input v-model="descripcion" placeholder="Descripción" type="text">
     <input v-model="monto" placeholder="Monto" type="number">
     <select v-model="categoria">
-      <option v-for="categoria in categorias" :key="categoria" :value="categoria">
-        {{ categoria }}
+      <option v-for="cat in categorias" :key="cat.nombre" :value="cat.nombre">  
+        {{ cat.emoji }} {{ cat.nombre }}
       </option>
     </select>
     <button type='submit'>Agregar</button>    

@@ -1,9 +1,10 @@
 <script setup>
 import { ref, computed } from 'vue'
+import FormularioGasto from './components/FormularioGasto.vue';
 // 🔨 Importen aquí sus 4 componentes cuando los tengan.
 
 // ===== CONTRATO: categorías válidas (dato acordado, NO lo inventen) =====
-const CATEGORIAS = [
+const categorias = [
   { nombre: 'Comida',     emoji: '🍔' },
   { nombre: 'Transporte', emoji: '🚗' },
   { nombre: 'Súper',      emoji: '🛒' },
@@ -23,6 +24,8 @@ const gastos = ref([])
 <template>
   <h1>💸 FinTrack</h1>
   <div class="finapp">
+    <FormularioGasto @agregar="agregarGasto" :categorias="categorias" />
+    
     <!-- 🔨 Izquierda (.card): FormularioGasto + FiltroCategoria + lista de ItemGasto (v-for) -->
     <!-- 🔨 Derecha (.card): PanelResumen -->
     <!-- Conecten props (:) y eventos (@) según el contrato. -->
